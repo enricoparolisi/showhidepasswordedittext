@@ -15,6 +15,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -166,11 +167,21 @@ public class ShowHidePasswordEditText extends AppCompatEditText {
   }
 
   private void togglePasswordVisibility() {
+    // Store the selection
+    int selectionStart = this.getSelectionStart();
+    int selectionEnd = this.getSelectionEnd();
+
+    // Set transformation method to show/hide password
     if (isShowingPassword) {
-      setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD, true);
+      setTransformationMethod(new PasswordTransformationMethod());
     } else {
-      setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD, true);
+      setTransformationMethod(null);
     }
+
+    // Restore selection
+    this.setSelection(selectionStart, selectionEnd);
+
+    // Toggle flag and show indicator
     isShowingPassword = !isShowingPassword;
     showPasswordVisibilityIndicator(true);
   }
