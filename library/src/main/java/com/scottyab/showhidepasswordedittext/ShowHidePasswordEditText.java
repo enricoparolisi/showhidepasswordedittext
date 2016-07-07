@@ -33,6 +33,16 @@ public class ShowHidePasswordEditText extends AppCompatEditText {
   private boolean leftToRight = true;
   private int tintColor = 0;
 
+  public boolean isPersistentIndicator() {
+    return isPersistentIndicator;
+  }
+
+  public void setPersistentIndicator(boolean persistentIndicator) {
+    isPersistentIndicator = persistentIndicator;
+  }
+
+  private boolean isPersistentIndicator = true;
+
   @DrawableRes private int visiblityIndicatorShow = R.drawable.ic_visibility_grey_900_24dp;
   @DrawableRes private int visiblityIndicatorHide = R.drawable.ic_visibility_off_grey_900_24dp;
   private boolean monospace;
@@ -59,6 +69,7 @@ public class ShowHidePasswordEditText extends AppCompatEditText {
       visiblityIndicatorShow = attrsArray.getResourceId(R.styleable.ShowHidePasswordEditText_drawable_show, visiblityIndicatorShow);
       visiblityIndicatorHide = attrsArray.getResourceId(R.styleable.ShowHidePasswordEditText_drawable_hide, visiblityIndicatorHide);
       monospace = attrsArray.getBoolean(R.styleable.ShowHidePasswordEditText_monospace, true);
+      isPersistentIndicator = attrsArray.getBoolean(R.styleable.ShowHidePasswordEditText_persistent_indicator, true);
       tintColor = attrsArray.getColor(R.styleable.ShowHidePasswordEditText_tint_color, 0);
 
       attrsArray.recycle();
@@ -85,9 +96,9 @@ public class ShowHidePasswordEditText extends AppCompatEditText {
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (s.length() > 0) {
-          showPasswordVisibilityIndicator(true);
+          showPasswordVisibilityIndicator(isPersistentIndicator || true);
         } else {
-          showPasswordVisibilityIndicator(false);
+          showPasswordVisibilityIndicator(isPersistentIndicator || false);
         }
       }
 
