@@ -84,7 +84,7 @@ public class ShowHidePasswordEditText extends AppCompatEditText {
       setTypeface(Typeface.DEFAULT);
     }
 
-    if(!TextUtils.isEmpty(getText())){
+    if(isPersistentIndicator){
       showPasswordVisibilityIndicator(true);
     }
 
